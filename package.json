@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "alpinejs": "^3.13.1",
-    "chevrotain": "^11.0.3"
+    "chevrotain": "^11.0.3",
+    "terser": "^5.22.0"
   }
 }
