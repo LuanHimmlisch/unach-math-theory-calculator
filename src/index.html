@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body class="bg-gray-50 min-h-screen h-full py-20">
+    <main class="max-w-xl mx-auto flex flex-col gap-5" x-data="calculator">
+        <h1 class="text-3xl font-bold text-slate-700">Calculadora papi chiluda</h1>
+        <form class="block" x-on:submit.prevent="calculate">
+            <div class="flex gap-5">
+                <input class="w-3/4 border p-3 rounded-3xl shadow-md outline-none focus:border-blue-500"
+                       type="text"
+                       placeholder="Insertar expresión aritmética"
+                       :class="errors.length > 0 ? 'border-red-500' : ''"
+                       x-ref="input"
+                       x-model="input">
+                <input class="w-1/4 border p-3 rounded-3xl shadow-md outline-none"
+                       :value="!result && result !== 0 ? '' : (result * 1).toLocaleString()"
+                       placeholder="Resultado"
+                       readonly />
+            </div>
+            <ul class="mt-5">
+                <template x-for="(item, index) in errors" :key="index">
+                    <li class="text-red-500" x-html="item.message.replace(/\n/g, '<br />')"></li>
+                </template>
+            </ul>
+            <div class="flex gap-5 mt-8">
+                <div class="grid grid-cols-4 gap-5 w-full">
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('0')">
+                        0
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('1')">
+                        1
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('2')">
+                        2
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('3')">
+                        3
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('4')">
+                        4
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('5')">
+                        5
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('6')">
+                        6
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('7')">
+                        7
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('8')">
+                        8
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('9')">
+                        9
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('.')">
+                        .
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="remove()">
+                        <svg class="w-8 h-8" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 9.75L14.25 12m0 0l2.25 2.25M14.25 12l2.25-2.25M14.25 12L12 14.25m-2.58 4.92l-6.375-6.375a1.125 1.125 0 010-1.59L9.42 4.83c.211-.211.498-.33.796-.33H19.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-9.284c-.298 0-.585-.119-.796-.33z"
+                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="w-32 flex flex-col gap-5">
+                    <button class="h-24 bg-blue-500 text-white grid place-content-center rounded-md shadow"
+                            type="submit">
+                        &equals;
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('sqrt()')">
+                        &Sqrt;
+                    </button>
+                    <button class="h-24 bg-white grid place-content-center rounded-md shadow"
+                            type="button"
+                            x-on:click="add('log()')">
+                        log
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-5 mt-5">
+                <button class="flex-1 h-24 bg-white grid place-content-center rounded-md shadow"
+                        type="button"
+                        x-on:click="add('(')">
+                    (
+                </button>
+                <button class="flex-1 h-24 bg-white grid place-content-center rounded-md shadow"
+                        type="button"
+                        x-on:click="add(')')">
+                    )
+                </button>
+            </div>
+        </form>
+        <div class="flex flex-col gap-5">
+            <!-- <div>
+                <p class="text-slate-700 font-bold text-lg">Pasos</p>
+            </div>
+            <hr> -->
+            <div>
+                <p class="text-slate-700 font-bold text-lg mb-5">Resultado</p>
+
+            </div>
+        </div>
+    </main>
+
+    <aside class="max-w-xl mx-auto text-gray-400 mt-16">
+        <details class="cursor-pointer">
+            <summary class="font-semibold text-lg">Créditos</summary>
+            <div class="text-gray-500 mt-3">
+                <ul class="list-disc pl-5">
+                    <li>Luis Ángel Serrano Catalá</li>
+                    <li>Jorge Rincón Farias</li>
+                    <li>José Melquiades Castellanos Morales</li>
+                    <li>Brayan Fermín Alegría de la Cruz</li>
+                    <li>Jonatan Eduardo Águilar Gómez</li>
+                </ul>
+            </div>
+        </details>
+    </aside>
+    <script type="module" src="./assets//js/app.js"></script>
+</body>
+
+</html>
