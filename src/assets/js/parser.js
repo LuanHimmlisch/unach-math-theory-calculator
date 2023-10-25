@@ -138,10 +138,10 @@ class CalculatorPure extends CstParser {
 
         $.RULE("sqrtFunction", () => {
             $.CONSUME(SqrtFunc);
-            $.OR([
-                { ALT: () => { $.SUBRULE($.parenthesisExpression) } },
-                { ALT: () => { $.LA(NumberLiteral) } }
-            ])
+
+            $.CONSUME(LParen);
+            $.SUBRULE($.expression);
+            $.CONSUME(RParen);
         });
 
         $.RULE("logFunction", () => {
@@ -251,7 +251,7 @@ class CalculatorInterpreter extends BaseCstVisitor {
     logFunction(ctx) {
         const expression = this.visit(ctx.expression);
 
-        return Math.log(expression);
+        return Math.log10(expression);
     }
 }
 
