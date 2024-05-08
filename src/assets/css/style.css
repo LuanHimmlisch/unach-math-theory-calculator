@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.node {
+    @apply grid place-content-center w-8 h-8 bg-white rounded-full border border-black;
+}
